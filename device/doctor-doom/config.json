@@ -37,5 +37,8 @@
   "tile_menu": true,
   "show_stats": false,
   "animations": true,
-  "advanced_effects": false
+  "advanced_effects": false,
+  "wallpaper_change_on_wake": true,
+  "wallpaper_rotation_minutes": 0,
+  "wallpaper_order": "sequential"
 }
