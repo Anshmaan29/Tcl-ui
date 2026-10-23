@@ -2,7 +2,7 @@
 
 Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
 
-**Status:** baseline backed up and inspected; Doctor Doom launcher installed and verified as Home through a reboot. Ten session packages remain disabled; firmware re-enabled the reminder app, which stays hidden. Navigation and real remote buttons verified. Awaiting owner app selection/reordering and final ADB closure. See [checkpoints](checkpoints/).
+**Status:** baseline backed up and inspected; Doctor Doom launcher installed and verified as Home through a reboot. Ten session packages remain disabled; firmware re-enabled the reminder app, which stays hidden. Navigation and real remote buttons verified. Owner app selection applied: 13 priority apps retained and 11 other optional apps disabled. Final order/reboot check and ADB closure in progress. See [checkpoints](checkpoints/).
 
 ## Local backup
 
@@ -10,7 +10,7 @@ Original private backup: `/Users/anshmaansingh/tv/cleanyourtv/backup/2026-10-23-
 
 ## Theme
 
-[device/doctor-doom/config.json](device/doctor-doom/config.json) sets four dock apps in left-to-right order using `dock_apps`; `columns` controls slots. Replace `device/doctor-doom/wallpaper.jpg` to change the background. After installation, push with `TV_HOST=<tv-ip> tools/theme.sh device/doctor-doom`. The TV IP may change after reconnecting Wi-Fi.
+[device/doctor-doom/config.json](device/doctor-doom/config.json) stores the full priority order in `dock_apps`; `columns: 4` places only the first four in the dock. Remaining favourites appear in that same order below it. Apps newly installed later follow the saved favourites. Changing this list also invalidates an older on-TV manual order without deleting it. Replace `device/doctor-doom/wallpaper.jpg` to change the background. After installation, push with `TV_HOST=<tv-ip> tools/theme.sh device/doctor-doom`. The TV IP may change after reconnecting Wi-Fi.
 
 ## Recovery and maintenance
 
@@ -22,4 +22,4 @@ At completion, switch USB and Network/ADB debugging off, revoke authorisations, 
 
 ## App choices
 
-See the numbered [app review list](device/apps-for-review.md). The owner requested this list before further app disables and reordering. All streaming apps remain enabled for now.
+See the numbered [app review list](device/apps-for-review.md). The owner’s chosen order is saved in [priority-order.json](device/priority-order.json). Keep: Netflix, Prime Video, YouTube, JioHotstar, Apple TV, FanCode, ZEE5, SonyLIV, F1 TV, Spotify, Airtel Xstream, YouTube Music, discovery+. Other optional apps from the review list are disabled; Google Play Store/Services and essential TV services are preserved. `restore-app-selection.sh` restores just this selection and prior theme while retaining the custom Home; `restore-tv.sh` restores the original stock Home and all session-disabled apps.
