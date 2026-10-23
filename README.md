@@ -2,7 +2,7 @@
 
 Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
 
-**Status:** baseline backed up and inspected; debloat and launcher installation pending. See [checkpoint 1](checkpoints/01-baseline.md).
+**Status:** baseline backed up and inspected; package review and reversible scripts prepared; debloat and launcher installation pending. See [checkpoints](checkpoints/).
 
 ## Local backup
 
@@ -14,7 +14,7 @@ Original private backup: `/Users/anshmaansingh/tv/cleanyourtv/backup/2026-10-23-
 
 ## Recovery and maintenance
 
-Only reversible `pm disable-user --user 0` changes will be used. Per-step restore scripts and a final build/install entry point will be added before TV modifications. No packages are uninstalled. Streaming, casting, voice assistant, firmware updates, input/remote services and Android core packages are preserved.
+Only reversible `pm disable-user --user 0` changes will be used. Use `TV_HOST=<tv-ip> ./restore-tv.sh` to re-enable the session packages and restore stock Home. `TV_HOST=<tv-ip> ./build-and-install-tv.sh` rebuilds from source, installs with stock Home preserved, and pushes the Doctor Doom theme. Create `tools/venv` with Python and install `tools/requirements.txt` first. The scripts use the locally downloaded SDK/JDK; override `ANDROID_HOME`, `JAVA_HOME` and `GRADLE_USER_HOME` on another computer. Re-enable a single app with `TV_HOST=<tv-ip> tools/venv/bin/python tools/tv.py 'pm enable --user 0 PACKAGE.NAME'`. No packages are uninstalled. Streaming, casting, voice assistant, firmware updates, input/remote services and Android core packages are preserved.
 
 Private DNS was left unchanged. If AdGuard DNS is selected later, it does not block YouTube ads; undo with `settings put global private_dns_mode opportunistic` after reconnecting ADB.
 
