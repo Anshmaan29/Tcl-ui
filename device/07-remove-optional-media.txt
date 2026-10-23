@@ -1,0 +1,5 @@
+# Owner explicitly selected 13 apps to keep and requested all other optional apps disabled.
+# TCL G07, Android 11 AR07. Disable only, preserve data. Undo through restore-tv.sh.
+com.tcl.gallery
+com.tcl.ui_mediaCenter
+com.tcl.t_solo

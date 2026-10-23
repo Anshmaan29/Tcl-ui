@@ -7,7 +7,7 @@ PY=tools/venv/bin/python
 # Bring back the known original launcher before changing Home; never touch the three factory-disabled apps.
 "$PY" tools/tv.py 'pm enable --user 0 com.google.android.apps.tv.launcherx'
 "$PY" tools/tv.py 'pm enable --user 0 com.google.android.tungsten.setupwraith'
-for list in device/03-promotions-autoinstall.txt device/02-content-messages.txt device/01-cleaner-feedback.txt; do
+for list in device/08-remove-optional-cast-content.txt device/07-remove-optional-media.txt device/06-remove-streaming-b.txt device/05-remove-streaming-a.txt device/03-promotions-autoinstall.txt device/02-content-messages.txt device/01-cleaner-feedback.txt; do
   tools/restore.sh "$list" com.google.android.apps.tv.launcherx
 done
 "$PY" tools/tv.py 'cmd package set-home-activity --user 0 com.google.android.apps.tv.launcherx/.home.HomeActivity'

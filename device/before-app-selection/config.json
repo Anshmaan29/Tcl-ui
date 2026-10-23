@@ -1,0 +1,31 @@
+{
+  "columns": 4,
+  "dock_apps": [
+    "com.netflix.ninja",
+    "com.amazon.amazonvideo.livingroom",
+    "com.google.android.youtube.tv",
+    "in.startv.hotstar"
+  ],
+  "live_tv_package": "com.tcl.tv",
+  "hidden_apps": [
+    "com.tcl.usercenter",
+    "com.tcl.notereminder",
+    "com.tcl.tv",
+    "com.tcl.suspension"
+  ],
+  "wallpaper": true,
+  "wallpaper_dim": 12,
+  "wallpaper_true_color": false,
+  "background_color": "#000000",
+  "dock_glass": true,
+  "dock_opacity": 70,
+  "ambient_glow": true,
+  "app_glow": false,
+  "cinematic_home": false,
+  "rows_below_dock": 0,
+  "module_cards": false,
+  "tile_menu": true,
+  "show_stats": false,
+  "animations": true,
+  "advanced_effects": false
+}
