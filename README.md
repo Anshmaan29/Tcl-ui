@@ -2,7 +2,7 @@
 
 Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
 
-**Status:** baseline backed up and inspected; Doctor Doom launcher installed and verified as Home through a reboot. Ten session packages remain disabled; firmware re-enabled the reminder app, which stays hidden. Navigation and real remote buttons verified. Owner app selection applied: 13 priority apps retained and 11 other optional apps disabled. Final order/reboot check and ADB closure in progress. See [checkpoints](checkpoints/).
+**Status:** baseline backed up and inspected; Doctor Doom launcher installed and verified as Home through a reboot. Ten session packages remain disabled; firmware re-enabled the reminder app, which stays hidden. Navigation and real remote buttons verified. Owner app selection applied: 13 priority apps retained and 11 other optional apps disabled. Exact order and final reboot checks passed; owner confirmed streaming playback. ADB closure in progress. HDMI/Live TV programme playback was not tested because no source was connected. See [checkpoints](checkpoints/).
 
 ## Local backup
 
