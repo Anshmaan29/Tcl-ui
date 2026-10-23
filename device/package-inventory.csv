@@ -109,10 +109,10 @@ com.google.android.tv.frameworkpackagestubs,system-input-remote-or-support,keep,
 com.tcl.android.webview,preloaded-apps,keep,Preserve functionality; no explicit removal preference
 com.tcl.assistant,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
 com.tcl.autopair,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.channelplus,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
+com.tcl.channelplus,system-input-remote-or-support,disabled-owner-selection,Owner requested only 13 priority apps retained; disabled reversibly in small batches
 com.tcl.esticker,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 com.tcl.factory.view,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.gallery,preloaded-apps,keep,Preserve functionality; no explicit removal preference
+com.tcl.gallery,preloaded-apps,disabled-owner-selection,Owner requested only 13 priority apps retained; disabled reversibly in small batches
 com.tcl.guard,telemetry-analytics,disabled-verified,Verified promotional/cleaner role
 com.tcl.hotelmenu,preloaded-apps,keep,Preserve functionality; no explicit removal preference
 com.tcl.initsetup,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
@@ -125,11 +125,11 @@ com.tcl.providers.config,system-input-remote-or-support,keep,Preserve functional
 com.tcl.settings,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.smartalexa,preloaded-apps,keep,Originally disabled; preserve original state
 com.tcl.system.server,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.t_solo,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
+com.tcl.t_solo,optional-background-voice-cast,disabled-owner-selection,Owner requested only 13 priority apps retained; disabled reversibly in small batches
 com.tcl.tv,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.tv.tclhome_passive,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 com.tcl.tvinput,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.ui_mediaCenter,preloaded-apps,keep,Preserve functionality; no explicit removal preference
+com.tcl.ui_mediaCenter,preloaded-apps,disabled-owner-selection,Owner requested only 13 priority apps retained; disabled reversibly in small batches
 com.tcl.useragreement,telemetry-analytics,keep,Agreement and update proxy; preserve updater support
 com.tvos,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 tv.wuaki.apptv,streaming-media,keep,Originally disabled; preserve original state
