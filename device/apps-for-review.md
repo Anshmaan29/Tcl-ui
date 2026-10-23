@@ -1,6 +1,6 @@
 # Apps for owner review
 
-All enabled at the time of review; owner chooses any further disable/reorder actions. Numbers 1–4 are the current dock, left to right.
+Historical list: these apps were enabled at the review checkpoint. The owner’s later selection is applied; see `priority-order.json` and `package-inventory.csv` for current decisions. Numbers 1–4 remain the dock, left to right.
 
 | Number | App | Package |
 |---|---|---|
