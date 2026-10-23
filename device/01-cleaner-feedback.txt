@@ -1,0 +1,4 @@
+# TCL G07 / Android 11 AR07. Only newly disabled packages; original factory-disabled packages excluded.
+com.tcl.guard # TGuard cleaner and device-use tracking; not Android's permission controller
+com.google.android.feedback # Google feedback / bug reporting
+com.tcl.esticker # retail promotional sticker

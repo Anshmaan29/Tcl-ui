@@ -1,0 +1,4 @@
+# TCL G07 / Android 11 AR07. Inspected with dumpsys package before applying.
+com.tcl.waterfall.overseas # TCL content/recommendation portal
+com.tcl.messagebox # pushed promotional messages
+com.tcl.notereminder # message-box reminders; AR07 may re-enable at boot

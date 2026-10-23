@@ -1,0 +1,4 @@
+# TCL G07 / Android 11 AR07. Preserve input services and partnercustomizer's TKey function.
+com.tcl.dashboard # TCL promotional Home dashboard; input panel is com.tcl.suspension
+com.tcl.tv.tclhome_passive # TCL Home content starts at boot
+android.autoinstalls.config.google.gtvpai # partner preload auto-installs

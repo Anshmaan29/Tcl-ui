@@ -1,0 +1,5 @@
+# Apply ONLY after com.gathin.tvhome is installed, starts, and handles HOME.
+# Setupwraith must own NO saved Wi-Fi networks. tools/disable.sh enforces this.
+# Restore stock Home with ./restore-tv.sh.
+com.google.android.tungsten.setupwraith # competing RecoveryActivity HOME claimant
+com.google.android.apps.tv.launcherx # stock Google TV launcher
