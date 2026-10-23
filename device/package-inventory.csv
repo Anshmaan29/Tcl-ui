@@ -120,7 +120,7 @@ com.tcl.inputmethod.international,system-input-remote-or-support,keep,Preserve f
 com.tcl.keyhelp,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.micmanager,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.miracast,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
-com.tcl.notereminder,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
+com.tcl.notereminder,manufacturer-content-ads,firmware-reenabled-hidden,AR07 re-enabled it during the verified reboot; hidden in launcher config/theme
 com.tcl.providers.config,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.settings,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.smartalexa,preloaded-apps,keep,Originally disabled; preserve original state

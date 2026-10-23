@@ -2,7 +2,7 @@
 
 Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
 
-**Status:** baseline backed up and inspected; launcher installed with Doctor Doom theme and verified as actual Home; nine promotional/cleaner packages plus two competing Home packages disabled. Navigation, reboot and physical-remote checks in progress. See [checkpoints](checkpoints/).
+**Status:** baseline backed up and inspected; Doctor Doom launcher installed and verified as Home through a reboot. Ten session packages remain disabled; firmware re-enabled the reminder app, which stays hidden. Navigation and real remote buttons verified. Awaiting owner app selection/reordering and final ADB closure. See [checkpoints](checkpoints/).
 
 ## Local backup
 
@@ -19,3 +19,7 @@ Only reversible `pm disable-user --user 0` changes will be used. Use `TV_HOST=<t
 Private DNS was left unchanged. If AdGuard DNS is selected later, it does not block YouTube ads; undo with `settings put global private_dns_mode opportunistic` after reconnecting ADB.
 
 At completion, switch USB and Network/ADB debugging off, revoke authorisations, reboot, and verify the ADB port refuses connections with `tools/adb-closed.py <tv-ip>`.
+
+## App choices
+
+See the numbered [app review list](device/apps-for-review.md). The owner requested this list before further app disables and reordering. All streaming apps remain enabled for now.

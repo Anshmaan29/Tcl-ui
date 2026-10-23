@@ -1,4 +1,5 @@
 # TCL G07 / Android 11 AR07. Inspected with dumpsys package before applying.
+# Reboot verified: firmware re-enables com.tcl.notereminder. Keep it hidden; do not re-disable after every boot.
 com.tcl.waterfall.overseas # TCL content/recommendation portal
 com.tcl.messagebox # pushed promotional messages
 com.tcl.notereminder # message-box reminders; AR07 may re-enable at boot
