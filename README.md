@@ -2,7 +2,7 @@
 
 Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
 
-**Status:** baseline backed up and inspected; package review and reversible scripts prepared; debloat and launcher installation pending. See [checkpoints](checkpoints/).
+**Status:** baseline backed up and inspected; nine promotional/cleaner packages disabled and verified in three batches; launcher build and safe Home handover pending. See [checkpoints](checkpoints/).
 
 ## Local backup
 

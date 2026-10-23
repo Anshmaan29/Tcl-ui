@@ -39,7 +39,7 @@ package,category,decision,reason
 =/in.startv.hotstar-ajQbGH0u5WTNnoJn7g0TvQ==/base.apk=in.startv.hotstar,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 =/tv.airtel.xstream.tvapp-itMf43CMOOC2MYaskpQa7Q==/base.apk=tv.airtel.xstream.tvapp,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 android,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-android.autoinstalls.config.google.gtvpai,manufacturer-content-ads,planned-disable,Verified promotional/cleaner role
+android.autoinstalls.config.google.gtvpai,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 au.com.stan.and,streaming-media,keep,Originally disabled; preserve original state
 com.android.backupconfirm,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.android.bluetooth,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
@@ -91,7 +91,7 @@ com.android.wifi.resources,system-input-remote-or-support,keep,Preserve function
 com.google.android.apps.nbu.smartconnect.tv,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.google.android.ext.services,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.google.android.ext.shared,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.google.android.feedback,telemetry-analytics,planned-disable,Verified promotional/cleaner role
+com.google.android.feedback,telemetry-analytics,disabled-verified,Verified promotional/cleaner role
 com.google.android.gsf,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.google.android.modulemetadata,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.google.android.onetimeinitializer,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
@@ -110,24 +110,24 @@ com.tcl.android.webview,preloaded-apps,keep,Preserve functionality; no explicit 
 com.tcl.assistant,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
 com.tcl.autopair,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.channelplus,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.esticker,manufacturer-content-ads,planned-disable,Verified promotional/cleaner role
+com.tcl.esticker,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 com.tcl.factory.view,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.gallery,preloaded-apps,keep,Preserve functionality; no explicit removal preference
-com.tcl.guard,telemetry-analytics,planned-disable,Verified promotional/cleaner role
+com.tcl.guard,telemetry-analytics,disabled-verified,Verified promotional/cleaner role
 com.tcl.hotelmenu,preloaded-apps,keep,Preserve functionality; no explicit removal preference
 com.tcl.initsetup,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.inputmethod.international,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.keyhelp,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.micmanager,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.miracast,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
-com.tcl.notereminder,manufacturer-content-ads,planned-disable,Verified promotional/cleaner role
+com.tcl.notereminder,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 com.tcl.providers.config,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.settings,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.smartalexa,preloaded-apps,keep,Originally disabled; preserve original state
 com.tcl.system.server,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.t_solo,optional-background-voice-cast,keep,Preserve functionality; no explicit removal preference
 com.tcl.tv,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
-com.tcl.tv.tclhome_passive,manufacturer-content-ads,planned-disable,Verified promotional/cleaner role
+com.tcl.tv.tclhome_passive,manufacturer-content-ads,disabled-verified,Verified promotional/cleaner role
 com.tcl.tvinput,system-input-remote-or-support,keep,Preserve functionality; no explicit removal preference
 com.tcl.ui_mediaCenter,preloaded-apps,keep,Preserve functionality; no explicit removal preference
 com.tcl.useragreement,telemetry-analytics,keep,Agreement and update proxy; preserve updater support
