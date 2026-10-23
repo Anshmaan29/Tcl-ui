@@ -1,8 +1,8 @@
 # TCL G07 clean home
 
-Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Doctor Doom wallpaper supplied by the owner.
+Device-specific setup based on [cleanyourtv](https://github.com/Gathin23/cleanyourtv), with the original MIT license. Native Java launcher, AndroidX RecyclerView and DynamicAnimation; no internet permission, blur or video. Four wallpaper images supplied by the owner.
 
-**Status:** Doctor Doom launcher installed and verified as Home through reboot. The 13 selected apps are in the owner’s exact order; 21 session packages are disabled, plus three that were already disabled. TCL firmware re-enabled its reminder app, which stays hidden. Navigation, real remote buttons and streaming playback verified. Final authorisation revocation/debugging shutdown is awaiting the owner’s remote steps. HDMI/Live TV programme playback was not tested because no source was connected. See [checkpoints](checkpoints/).
+**Status:** Four-background launcher installed and verified as Home through reboot. Standby wakes and cold boots advance the wallpaper; app returns keep it. Batman was removed at the owner’s request. The 13 selected apps are in the owner’s exact order; 21 session packages are disabled, plus three that were already disabled. TCL firmware re-enabled its reminder app, which stays hidden. Navigation, real remote buttons and streaming playback verified. Final authorisation revocation/debugging shutdown is awaiting the owner’s remote steps. HDMI/Live TV programme playback was not tested because no source was connected. See [checkpoints](checkpoints/).
 
 ## Local backup
 
@@ -10,7 +10,11 @@ Original private backup: `/Users/anshmaansingh/tv/cleanyourtv/backup/2026-10-23-
 
 ## Theme
 
-[device/doctor-doom/config.json](device/doctor-doom/config.json) stores the full priority order in `dock_apps`; `columns: 4` places only the first four in the dock. Remaining favourites appear in that same order below it. Apps newly installed later follow the saved favourites. Changing this list also invalidates an older on-TV manual order without deleting it. Replace `device/doctor-doom/wallpaper.jpg` to change the background. After installation, push with `TV_HOST=<tv-ip> tools/theme.sh device/doctor-doom`. The TV IP may change after reconnecting Wi-Fi.
+[device/doctor-doom/config.json](device/doctor-doom/config.json) stores the full priority order in `dock_apps`; `columns: 4` places only the first four in the dock. Remaining favourites appear in that same order below it. Apps newly installed later follow the saved favourites. Changing this list also invalidates an older on-TV manual order without deleting it. After installation, push with `TV_HOST=<tv-ip> tools/theme.sh device/doctor-doom`. The TV IP may change after reconnecting Wi-Fi.
+
+The [wallpaper gallery](device/doctor-doom/ASSETS.md) contains Doctor Doom, the racing driver, Spider-Man and the warrior. `wallpaper_change_on_wake: true` advances once after standby wake or a cold boot; `wallpaper_order: "sequential"` cycles in filename order without an immediate repeat. `wallpaper_rotation_minutes: 0` keeps the picture unchanged during use and ordinary app returns. This small source feature is off by default for other themes. It uses the boot count and screen broadcasts, with no additional permission, service, network access or polling.
+
+Add or replace images in `device/doctor-doom/wallpapers/`, using 16:9 landscape JPEGs and stable filenames, then push the theme. Keep each file comfortably below 300 KB. A single image selected in Launcher settings overrides the gallery; select **Theme default** to resume it. `TV_HOST=<tv-ip> ./restore-wallpaper-gallery.sh` restores the previous single Doctor Doom background and preserves the chosen apps and Home. The prior APK also remains in the private pre-gallery backup.
 
 ## Recovery and maintenance
 
@@ -26,4 +30,4 @@ See the numbered [app review list](device/apps-for-review.md). The owner’s cho
 
 ## Customize later
 
-On the TV, enable USB debugging (and Network/ADB debugging if present), accept the computer authorisation prompt, and check the current IP under Network. From this checkout, use `TV_HOST=<tv-ip> tools/venv/bin/python tools/tv.py --probe`. The Python client handles this Mac’s ADB connection. Edit the theme JSON and push it with `tools/theme.sh`; no rebuild is needed for app priority, columns, colours or wallpaper. Keep the saved `device/before-app-selection/` theme if rolling back this round. Close/revoke debugging again after the next session.
+On the TV, enable USB debugging (and Network/ADB debugging if present), accept the computer authorisation prompt, and check the current IP under Network. From this checkout, use `TV_HOST=<tv-ip> tools/venv/bin/python tools/tv.py --probe`. The Python client handles this Mac’s ADB connection. Edit the theme JSON and push it with `tools/theme.sh`; no rebuild is needed for app priority, columns, colours or wallpaper images once the current source build is installed. Keep the saved `device/before-app-selection/` and `device/before-wallpaper-gallery/` themes for their respective rollbacks. Close/revoke debugging again after the next session.

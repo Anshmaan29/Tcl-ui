@@ -85,4 +85,9 @@ final class WallpaperRotation {
     static boolean due(long previous, long now, long interval) {
         return interval > 0 && (previous == 0 || now < previous || now - previous >= interval);
     }
+
+    /** An ordinary Home/app return does not advance; a cold boot or a recorded standby does. */
+    static boolean wakeDue(int previousBoot, int boot, boolean sleeping, boolean interactive) {
+        return interactive && (sleeping || (previousBoot >= 0 && boot >= 0 && previousBoot != boot));
+    }
 }

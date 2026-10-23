@@ -19,6 +19,19 @@ import org.junit.Test;
 
 public class WallpaperRotationTest {
 
+    @Test
+    public void wakeChangesOnceAfterStandbyOrBootButNotAnAppReturn() {
+        assertFalse(WallpaperRotation.wakeDue(8, 8, false, true));
+        assertFalse(WallpaperRotation.wakeDue(8, 8, true, false));
+        assertTrue(WallpaperRotation.wakeDue(8, 8, true, true));
+        assertTrue(WallpaperRotation.wakeDue(8, 9, false, true));
+        assertFalse(WallpaperRotation.wakeDue(8, 9, false, false));
+        // Unavailable boot count and first use must not cause repeated advances.
+        assertFalse(WallpaperRotation.wakeDue(-1, 9, false, true));
+        assertFalse(WallpaperRotation.wakeDue(8, -1, false, true));
+        assertFalse(WallpaperRotation.wakeDue(9, 9, false, true));
+    }
+
     private static File touch(File dir, String name, int bytes) throws IOException {
         File f = new File(dir, name);
         try (FileOutputStream out = new FileOutputStream(f)) {

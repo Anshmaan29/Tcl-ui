@@ -1,10 +1,15 @@
 package com.gathin.tvhome;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,6 +42,10 @@ final class WallpaperPlayer {
     private final long interval;
     private final String order;
     private final SharedPreferences preferences;
+    private final Context wakeContext;
+    private final PowerManager power;
+    private final int boot;
+    private final BroadcastReceiver wakeReceiver;
     private final ExecutorService decoder = Executors.newSingleThreadExecutor();
     private final Random random = new Random();
     private final int width;
@@ -70,6 +79,26 @@ final class WallpaperPlayer {
         dimColor = config.wallpaperDim > 0 ? (config.wallpaperDim * 255 / 100) << 24 : 0;
         order = config.wallpaperOrder;
         preferences = context.getSharedPreferences("wallpaper_rotation", Context.MODE_PRIVATE);
+        // Only the opted-in collection listens for power events. Keep the sleep marker across activity
+        // recreation, and consume it only after a picture has actually been shown with the screen on.
+        wakeContext = config.wallpaperChangeOnWake && files.size() > 1 ? context : null;
+        power = wakeContext == null ? null : context.getSystemService(PowerManager.class);
+        boot = wakeContext == null ? -1
+                : Settings.Global.getInt(context.getContentResolver(), Settings.Global.BOOT_COUNT, -1);
+        wakeReceiver = wakeContext == null ? null : new BroadcastReceiver() {
+            @Override public void onReceive(Context ignored, Intent intent) {
+                if (Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+                    preferences.edit().putBoolean("sleeping", true).apply();
+                } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
+                    update();
+                }
+            }
+        };
+        if (wakeReceiver != null) {
+            IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+            filter.addAction(Intent.ACTION_SCREEN_ON);
+            context.registerReceiver(wakeReceiver, filter);
+        }
         moods = config.wallpaperMoods;
         latitude = moods.isEmpty() ? "" : context.getString(R.string.latitude);
         longitude = moods.isEmpty() ? "" : context.getString(R.string.longitude);
@@ -104,7 +133,7 @@ final class WallpaperPlayer {
     private void showFirst() {
         String previous = preferences.getString("image", "");
         List<File> playable = playable();
-        File first = WallpaperRotation.find(playable, previous);
+        File first = wakeDue() ? null : WallpaperRotation.find(playable, previous);
         if (first == null) first = WallpaperRotation.pick(playable, previous, order, random);
         while (first != null) {
             Bitmap bitmap = decode(first);
@@ -118,6 +147,7 @@ final class WallpaperPlayer {
                     preferences.edit().putString("image", displayed)
                             .putLong("changed", System.currentTimeMillis()).apply();
                 }
+                acknowledgeWake();
                 return;
             }
             files.remove(first);   // unreadable or over 4K: try another, or keep the plain colour
@@ -150,6 +180,18 @@ final class WallpaperPlayer {
         active = false;
         closed = true;
         decoder.shutdownNow();
+        if (wakeReceiver != null) wakeContext.unregisterReceiver(wakeReceiver);
+    }
+
+    private boolean wakeDue() {
+        return power != null && WallpaperRotation.wakeDue(preferences.getInt("boot", -1), boot,
+                preferences.getBoolean("sleeping", false), power.isInteractive());
+    }
+
+    private void acknowledgeWake() {
+        if (power != null && power.isInteractive()) {
+            preferences.edit().putInt("boot", boot).putBoolean("sleeping", false).apply();
+        }
     }
 
     void update() {
@@ -159,10 +201,15 @@ final class WallpaperPlayer {
         List<File> playable = playable();
         File selected = WallpaperRotation.find(playable, previous);
         long changed = preferences.getLong("changed", 0);
-        if (selected == null || WallpaperRotation.due(changed, System.currentTimeMillis(), interval)) {
+        boolean woke = wakeDue();
+        if (selected == null || woke || WallpaperRotation.due(changed, System.currentTimeMillis(), interval)) {
             selected = WallpaperRotation.pick(playable, previous, order, random);
         }
-        if (selected == null || selected.getName().equals(displayed)) return;
+        if (selected == null) return;
+        if (selected.getName().equals(displayed)) {
+            if (woke) acknowledgeWake();
+            return;
+        }
         File next = selected;
         loading = true;
         decoder.execute(() -> {
@@ -186,6 +233,7 @@ final class WallpaperPlayer {
                     preferences.edit().putString("image", displayed)
                             .putLong("changed", System.currentTimeMillis()).apply();
                 }
+                acknowledgeWake();
             });
         });
     }
