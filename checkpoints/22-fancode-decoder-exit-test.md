@@ -20,4 +20,4 @@ Back or Exit App alone is not a dependable way to free this FanCode allocation o
 
 No root, codec/system modification, automatic task killer, background restriction, replacement streaming app or new launcher permission was introduced for this test. The launcher cannot repair FanCode's closed-source player or guarantee daily streaming-service availability. Keep official app and firmware updates enabled. The remote Netflix/YouTube mapping fix and its successful power-cycle verification are separate, in checkpoint 21.
 
-Final playback confirmation and network-ADB shutdown are pending at this checkpoint.
+The owner subsequently confirmed that YouTube again has a moving picture and sound after FanCode was force-stopped. This verifies recovery, not a permanent repair. Network-ADB shutdown remains pending.
