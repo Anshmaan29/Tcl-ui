@@ -11,6 +11,7 @@ for list in device/08-remove-optional-cast-content.txt device/07-remove-optional
   tools/restore.sh "$list" com.google.android.apps.tv.launcherx
 done
 "$PY" tools/tv.py 'cmd package set-home-activity --user 0 com.google.android.apps.tv.launcherx/.home.HomeActivity'
+./disable-remote-shortcuts.sh
 "$PY" tools/tv.py 'input keyevent KEYCODE_HOME'
 "$PY" tools/tv.py --screenshot shots/restored-stock-home.png
 "$PY" tools/tv.py 'pm list packages -d'

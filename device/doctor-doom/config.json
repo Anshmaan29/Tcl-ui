@@ -49,5 +49,10 @@
   "wifi_label_width": 0,
   "dock_title": false,
   "focus_overshoot": false,
-  "paged_home": true
+  "paged_home": true,
+  "app_keys": [
+    "4062:com.netflix.ninja",
+    "4065:com.google.android.youtube.tv"
+  ],
+  "restore_key_services": true
 }

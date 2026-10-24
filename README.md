@@ -24,6 +24,12 @@ The favourites row uses Netflix, Prime Video, YouTube, JioHotstar and the suppli
 
 `TV_HOST=<tv-ip> ./restore-logo-dock.sh` restores the preceding four-column banner design and keeps the four-background rotation and app choices. No rebuild is needed to change the timeout, columns or logo files after this source build is installed. The previous APK and full pre-update backup remain local.
 
+## Remote app buttons
+
+The physical Netflix and YouTube buttons map to `4062` and `4065` in `app_keys`. Only `InputKeyService` is enabled; `HomeKeyService` stays off. The owner tested both app buttons and confirmed that held volume still repeats on this G07 firmware. `restore_key_services: true` and the existing secure-settings permission let Home restore this helper after a force stop. The build-and-install script passes `INPUT_KEY_SERVICE=1 RESTORE_KEY_SERVICES=1` so a reinstall also keeps the shortcuts.
+
+To undo just this helper, run `TV_HOST=<tv-ip> ./disable-remote-shortcuts.sh`, or switch off Home under TV Settings → Accessibility. The script preserves other accessibility services. `restore-tv.sh` also switches the helper off when returning to stock Home.
+
 ## Recovery and maintenance
 
 All app removals used reversible `pm disable-user --user 0` changes. Use `TV_HOST=<tv-ip> ./restore-tv.sh` to re-enable the session packages and restore stock Home. `TV_HOST=<tv-ip> ./build-and-install-tv.sh` rebuilds from source, installs with stock Home preserved, and pushes the Doctor Doom theme. Create `tools/venv` with Python and install `tools/requirements.txt` first. The scripts use the locally downloaded SDK/JDK; override `ANDROID_HOME`, `JAVA_HOME` and `GRADLE_USER_HOME` on another computer. Re-enable a single app with `TV_HOST=<tv-ip> tools/venv/bin/python tools/tv.py 'pm enable --user 0 PACKAGE.NAME'`. No packages are uninstalled. The 13 selected media apps, Chromecast, Miracast, voice assistant, firmware updates, input/remote services and Android core packages are preserved. MagiConnect and the other unselected optional apps are disabled at the owner’s request.
