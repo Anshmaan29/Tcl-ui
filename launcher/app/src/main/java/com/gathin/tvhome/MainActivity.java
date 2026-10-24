@@ -116,6 +116,17 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private long settingsRevision;
     /** Idle time on Home before ClockActivity; 0 is off (config.xml, home_idle_clock_minutes). */
     private long idleClockMs;
+    private boolean logoDock, pagedHome, appsPage;
+    private int dockPagePadding;
+    private IdleGallery idleGallery;
+    private long galleryIdleMs;
+    private int galleryWakeKey = -1;
+    private final Runnable showGallery = () -> {
+        if (idleGallery != null && hasWindowFocus() && this.openPopup == null && !this.reordering) {
+            stopAmbientAnimation();
+            idleGallery.show();
+        }
+    };
     private final Runnable showIdleClock = () -> startActivity(new Intent(this, ClockActivity.class));
     private String liveTvAction;
     private String liveTvInputId;
@@ -368,6 +379,9 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         advancedEffects = cfg.animations && cfg.advancedEffects;
         reducedMotion = cfg.reducedMotion;
         dockRow = cfg.dockRow;
+        logoDock = cfg.logoDock;
+        pagedHome = cfg.pagedHome && cfg.dockRow;
+        galleryIdleMs = cfg.galleryIdleSeconds * 1000L;
         focusOvershoot = cfg.focusOvershoot;
         festival = cfg.festival;
         festive = festival.active(LocalDate.now());
@@ -505,19 +519,22 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             @Override
             public void onChildViewAttachedToWindow(@NonNull View v) {
                 v.setAlpha(tileAlpha(grid.getChildAdapterPosition(v)));
+                applyPageVisibility(v);
             }
 
             @Override
             public void onChildViewDetachedFromWindow(@NonNull View v) {
             }
         });
-        if (dockRow) grid.addItemDecoration(new DockDecoration(COLUMNS, density, cinematic, cfg.alwaysShowNames, cfg.dockOpacity, cfg.dockGlass, cfg.dockEvenPadding));
+        if (dockRow && !logoDock) grid.addItemDecoration(new DockDecoration(COLUMNS, density, cinematic, cfg.alwaysShowNames, cfg.dockOpacity, cfg.dockGlass, cfg.dockEvenPadding));
         if (cfg.fadeRows) TopFade.attach(grid, 48 * density);
         // Reduced motion: the tiles are simply there, with no entrance (reloadApps skips it there too).
         if (animations && !reducedMotion) {
             grid.setLayoutAnimation(new LayoutAnimationController(
                     AnimationUtils.loadAnimation(this, R.anim.tile_enter), 0.06f));
         }
+        if (galleryIdleMs > 0) idleGallery = new IdleGallery(root, animations,
+                (View) grid.getParent(), (View) clockBlock.getParent(), hero, glass, ambient, racePanel);
         adapter = new AppAdapter(this, this, COLUMNS, cfg);
         dockApps = cfg.dockApps;
         fillDockLeavesSlots = !cfg.fillDock;
@@ -545,6 +562,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             if (MainActivity.this.dockRow && cfg.dockTitle && rowsBelowDock > 0) want = Math.max(want, (int) (AppAdapter.TITLE_ROOM_DP * density));
             // No dock to push down: the grid starts at the top, with room for the first row's zoom and glass.
             if (!MainActivity.this.dockRow) want = (int) (AppAdapter.TOP_ROOM_DP * density);
+            dockPagePadding = want;
+            if (pagedHome && appsPage && !reordering) want = (int) (AppAdapter.TOP_ROOM_DP * density);
             if (grid.getPaddingTop() != want) {
                 grid.setPadding(grid.getPaddingLeft(), want, grid.getPaddingRight(), grid.getPaddingBottom());
             }
@@ -662,7 +681,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             if (keyCode == KeyEvent.KEYCODE_DPAD_UP) return true;
             if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
                 // Back to the dock tile Up came from, not wherever the focus finder lands.
-                focusTile(lastFocused % COLUMNS);
+                if (pagedHome && appsPage) showPage(false, lastFocused % COLUMNS);
+                else focusTile(lastFocused % COLUMNS);
                 return true;
             }
             int firstButton = btnInputs.getVisibility() == View.VISIBLE ? R.id.btnInputs : firstTopButton().getId();
@@ -778,9 +798,12 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (idleGallery != null) idleGallery.hide(true);
+        restartIdleClock();
         if (openLauncherSettingsIfAsked(intent)) return;
         if (openInputsIfAsked(intent)) return;
         if (intent == null || !intent.hasCategory(Intent.CATEGORY_HOME)) return;
+        if (pagedHome && appsPage) showPage(false, 0);
         grid.scrollToPosition(0);
         lastFocused = 0;
         lastFocusedKey = adapter.getItemCount() > 0 ? adapter.keyAt(0) : null;
@@ -1014,6 +1037,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     }
 
     private void restartIdleClock() {
+        root.removeCallbacks(showGallery);
+        if (galleryIdleMs > 0) root.postDelayed(showGallery, galleryIdleMs);
         root.removeCallbacks(showIdleClock);
         if (idleClockMs > 0) root.postDelayed(showIdleClock, idleClockMs);
     }
@@ -1021,6 +1046,9 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onPause() {
         super.onPause();
+        root.removeCallbacks(showGallery);
+        if (idleGallery != null) idleGallery.hide(false);
+        galleryWakeKey = -1;
         root.removeCallbacks(showIdleClock);
         endReorder();   // Home or another app while reordering keeps the order so far
         wallpaperPlayer.stop();
@@ -1084,6 +1112,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        root.removeCallbacks(showGallery);
         unregisterReceiver(packageReceiver);
         wallpaperPlayer.close();
         ConnectivityManager cm = getSystemService(ConnectivityManager.class);
@@ -1127,6 +1156,18 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
      */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == galleryWakeKey) {
+            if (event.getAction() == KeyEvent.ACTION_UP) galleryWakeKey = -1;
+            return true;
+        }
+        if (idleGallery != null && idleGallery.isShown() && IdleGallery.isWakeKey(event.getKeyCode())) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                galleryWakeKey = event.getKeyCode();
+                idleGallery.hide(true);
+                restartIdleClock();
+            }
+            return true;
+        }
         if (handleSettingsKey(event)) return true;
         if (tileMenuEnabled && !reordering && openPopup == null && cardPrompt == null
                 && event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
@@ -1213,6 +1254,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         adapter.setReordering(true);
         if (adapter.hasEmptySlots()) reloadTiles();   // every position must hold a tile that can move
         reordering = true;
+        refreshPageVisibility();
         orderAtStart = adapter.movableKeys();
         glass.setAccent(REORDER_ACCENT);
         btnReorder.setActivated(true);
@@ -1380,6 +1422,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             }
         }
         if (fillDockLeavesSlots) reloadTiles();   // the empty dock slots left out while reordering come back
+        if (pagedHome) showPage(lastFocused >= COLUMNS, lastFocused);
     }
 
     /**
@@ -1447,7 +1490,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     @Override
     public void onBackPressed() {
-        // Home screen: Back goes nowhere.
+        if (pagedHome && appsPage) showPage(false, lastFocused % COLUMNS);
+        // First Home page: Back goes nowhere.
     }
 
     // ---- glass highlight -------------------------------------------------------------------------
@@ -1477,6 +1521,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     @Override
     public void onTileFocused(int position, View card) {
+        glass.setLogo(logoDock && dockRow && position < COLUMNS);
         lastFocused = position;
         lastFocusedKey = adapter.keyAt(position);
         // Focus restored before the first layout (cold start): the tile has no size yet, and the glass
@@ -2116,7 +2161,9 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             }
             target = Math.min(position + COLUMNS, count - 1);
         }
-        focusTile(target);
+        if (pagedHome && !reordering && appsPage != (target >= COLUMNS)) {
+            showPage(target >= COLUMNS, target);
+        } else focusTile(target);
         // The default focus search clicks for Left/Right; Up/Down are handled here, so click for them too.
         grid.playSoundEffect(keyCode == KeyEvent.KEYCODE_DPAD_UP
                 ? SoundEffectConstants.NAVIGATION_UP : SoundEffectConstants.NAVIGATION_DOWN);
@@ -2186,6 +2233,29 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             pendingFocusScroll = null;
             grid.stopScroll();
         }
+    }
+
+    private void applyPageVisibility(View item) {
+        int position = grid.getChildAdapterPosition(item);
+        item.setVisibility(!pagedHome || reordering || GridNavigation.onPage(position, COLUMNS, appsPage)
+                ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void refreshPageVisibility() {
+        if (!pagedHome) return;
+        for (int i = 0; i < grid.getChildCount(); i++) applyPageVisibility(grid.getChildAt(i));
+    }
+
+    private void showPage(boolean apps, int target) {
+        cancelPendingFocusScroll();
+        appsPage = apps;
+        hideGlass();
+        hideHero();
+        refreshPageVisibility();
+        grid.setPadding(grid.getPaddingLeft(), apps ? (int) (AppAdapter.TOP_ROOM_DP * density)
+                : dockPagePadding, grid.getPaddingRight(), grid.getPaddingBottom());
+        ((GridLayoutManager) grid.getLayoutManager()).scrollToPositionWithOffset(apps ? COLUMNS : 0, 0);
+        refocusAfterLayout(target);
     }
 
     private void focusTile(int position) {

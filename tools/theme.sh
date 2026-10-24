@@ -91,6 +91,17 @@ if [ -d "$THEME/wallpapers" ]; then
     esac
   done
 fi
+# Small transparent dock artwork is separate from the rotating wallpaper collection.
+tv "content delete --uri $URI/logos 2>/dev/null" >/dev/null
+if [ -d "$THEME/logos" ]; then
+  for IMAGE in "$THEME"/logos/*.png; do
+    [ -f "$IMAGE" ] || continue
+    NAME=$(basename "$IMAGE")
+    [[ "$NAME" =~ ^[A-Za-z0-9_.-]+$ ]] || { echo "unsupported logo filename: $NAME" >&2; exit 1; }
+    "$PY" -I b64push.py "$IMAGE" "$(stage "logos/$NAME")"
+    tv "$(put "logos/$NAME")" >/dev/null
+  done
+fi
 # The collection's names (wallpaper_captions); a theme without them leaves no stale names behind.
 if [ -f "$THEME/wallpapers/captions.txt" ]; then
   "$PY" -I b64push.py "$THEME/wallpapers/captions.txt" "$(stage wallpapers/captions.txt)"

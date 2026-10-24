@@ -10,6 +10,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class GridNavigationTest {
+    @Test public void dockAndOtherAppsNeverShareAPage() {
+        for (int columns = 4; columns <= 7; columns++) {
+            for (int position = 0; position < 20; position++) {
+                assertEquals(position < columns, GridNavigation.onPage(position, columns, false));
+                assertEquals(position >= columns, GridNavigation.onPage(position, columns, true));
+            }
+        }
+        assertFalse(GridNavigation.onPage(-1, 5, false));
+        assertFalse(GridNavigation.onPage(-1, 5, true));
+    }
+
     @Test public void hebrewDockStartsOnTheRightAndStopsAtTheLeft() {
         assertTrue(GridNavigation.atHorizontalEdge(0, 11, 4, true, false));
         assertFalse(GridNavigation.atHorizontalEdge(0, 11, 4, true, true));

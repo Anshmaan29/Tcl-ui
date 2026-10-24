@@ -1,5 +1,5 @@
 {
-  "columns": 4,
+  "columns": 5,
   "dock_apps": [
     "com.netflix.ninja",
     "com.amazon.amazonvideo.livingroom",
@@ -29,7 +29,7 @@
   "background_color": "#000000",
   "dock_glass": true,
   "dock_opacity": 70,
-  "ambient_glow": true,
+  "ambient_glow": false,
   "app_glow": false,
   "cinematic_home": false,
   "rows_below_dock": 0,
@@ -40,5 +40,14 @@
   "advanced_effects": false,
   "wallpaper_change_on_wake": true,
   "wallpaper_rotation_minutes": 0,
-  "wallpaper_order": "sequential"
+  "wallpaper_order": "sequential",
+  "logo_dock": true,
+  "quiet_grid": true,
+  "gallery_idle_seconds": 120,
+  "icon_only_buttons": true,
+  "icon_only_inputs": true,
+  "wifi_label_width": 0,
+  "dock_title": false,
+  "focus_overshoot": false,
+  "paged_home": true
 }

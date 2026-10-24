@@ -3,6 +3,7 @@ package com.gathin.tvhome;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
+import android.graphics.RadialGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -22,6 +23,12 @@ public class GlassView extends View {
     private final RectF rect = new RectF();
     private final float density;
     private float radius;
+    private boolean logo;
+
+    private final Paint logoGlow = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+    void setLogo(boolean value) { if (logo != value) { logo = value; invalidate(); } }
+
     /** Glow colour as 0xRRGGBB: white normally, a festival's accent (diya gold) while a festive skin is on. */
     private int glowRgb = 0xFFFFFF;
     /** Glow strength: the white glow stays faint, a coloured one needs more alpha to read as warm light. */
@@ -66,12 +73,22 @@ public class GlassView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        logoGlow.setShader(new RadialGradient(0, 0, Math.max(1, w * .38f),
+                0x60FFFFFF, 0x00FFFFFF, Shader.TileMode.CLAMP));
         fill.setShader(new LinearGradient(0, 0, 0, h, 0x3DFFFFFF, 0x12FFFFFF, Shader.TileMode.CLAMP));
         specular.setShader(new LinearGradient(0, 0, 0, h * 0.45f, 0x66FFFFFF, 0x00FFFFFF, Shader.TileMode.CLAMP));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (logo) {
+            canvas.save();
+            canvas.translate(getWidth() / 2f, getHeight() - 12 * density);
+            canvas.scale(1, .18f);
+            canvas.drawCircle(0, 0, Math.max(1, getWidth() * .38f), logoGlow);
+            canvas.restore();
+            return;
+        }
         float inset = 6f * density;   // room for the glow
         rect.set(inset, inset, getWidth() - inset, getHeight() - inset);
 

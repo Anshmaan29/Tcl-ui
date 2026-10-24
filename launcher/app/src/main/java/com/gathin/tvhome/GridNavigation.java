@@ -4,6 +4,10 @@ package com.gathin.tvhome;
 final class GridNavigation {
     private GridNavigation() { }
 
+    static boolean onPage(int position, int columns, boolean appsPage) {
+        return position >= 0 && (position >= columns) == appsPage;
+    }
+
     static boolean atHorizontalEdge(int position, int count, int columns, boolean rtl, boolean left) {
         boolean towardStart = left != rtl;
         if (towardStart) return position % columns == 0;

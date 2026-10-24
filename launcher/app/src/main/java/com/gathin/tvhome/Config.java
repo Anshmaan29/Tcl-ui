@@ -155,6 +155,8 @@ final class Config {
     final List<File> wallpapers;
     final int wallpaperRotationMinutes;
     final boolean wallpaperChangeOnWake;
+    final boolean logoDock, quietGrid, pagedHome;
+    final int galleryIdleSeconds;
     final int wallpaperDim;
     /** The dock band's opacity in percent (config.json dock_opacity, 30-100): below 100 the wallpaper shows through. */
     final int dockOpacity;
@@ -219,7 +221,7 @@ final class Config {
                    List<RaceWeekend.Race> raceCalendar, boolean cinematicHome, boolean ambientGlow, boolean appGlow, boolean fadeRows, int homeIdleClockMinutes,
                    boolean keyFilter, boolean dockGlass, String glowStyle, boolean wallpaperCaptions,
                    boolean handleViewInputs, boolean tileMenu, boolean dockEvenPadding, boolean cinematicDots, boolean cinematicWhiteFocus, boolean wifiStatusColor, int cinematicScrim, int cinematicArt,
-                   Map<String, Set<String>> wallpaperMoods) {
+                   Map<String, Set<String>> wallpaperMoods, boolean logoDock, boolean quietGrid, boolean pagedHome, int galleryIdleSeconds) {
         this.handleViewInputs = handleViewInputs;
         this.tileMenu = tileMenu;
         this.inputKeycodes = inputKeycodes;
@@ -280,6 +282,10 @@ final class Config {
         this.wallpapers = Collections.unmodifiableList(wallpapers);
         this.wallpaperRotationMinutes = wallpaperRotationMinutes;
         this.wallpaperChangeOnWake = wallpaperChangeOnWake;
+        this.logoDock = logoDock;
+        this.quietGrid = quietGrid;
+        this.pagedHome = pagedHome;
+        this.galleryIdleSeconds = galleryIdleSeconds;
         this.wallpaperDim = wallpaperDim;
         this.dockOpacity = dockOpacity;
         this.wallpaperOrder = wallpaperOrder;
@@ -511,6 +517,16 @@ final class Config {
         Festival festival = json == null ? Festival.NONE : Festival.parse(string(json, "festival", ""),
                 string(json, "festival_until", ""), string(json, "greeting", ""), string(json, "accent_color", ""));
 
+        boolean logoDock = res.getBoolean(R.bool.logo_dock);
+        boolean quietGrid = res.getBoolean(R.bool.quiet_grid);
+        boolean pagedHome = res.getBoolean(R.bool.paged_home);
+        int gallerySeconds = res.getInteger(R.integer.gallery_idle_seconds);
+        if (json != null) {
+            logoDock = bool(json, "logo_dock", logoDock);
+            quietGrid = bool(json, "quiet_grid", quietGrid);
+            pagedHome = bool(json, "paged_home", pagedHome);
+            gallerySeconds = integer(json, "gallery_idle_seconds", gallerySeconds, 0, 3600);
+        }
         return new Config(dock, fillDock, hidden, libraryApps, liveTv, liveTvAction, liveTvInputId, packageMap(launchActions), packageMap(appLabels),
                 packageMap(appBanners), panelService,
                 panelAction, panelExtra, coocaaSources, inputAction, inputUriScheme,
@@ -519,7 +535,7 @@ final class Config {
                 Math.max(0, Math.min(100, skyIntensity)), settingsKeycodes, settingsKeyPanel, restoreKeyServices, wallpaperEnabled, wallpaper,
                 wallpapers, rotationMinutes, changeOnWake, wallpaperDim, dockOpacity, wallpaperOrder, applied,
                 festival, inputKeycodes, appKeys, stockHomeRedirect, json == null ? Collections.emptyList() : raceCalendar(json), cinematic, ambientGlow, appGlow, fadeRows,
-                Math.max(0, idleClockMinutes), keyFilter, dockGlass, glowStyle, wallpaperCaptions, handleViewInputs, tileMenu, dockEvenPadding, cinematicDots, cinematicWhiteFocus, wifiStatusColor, cinematicScrim, cinematicArt, wallpaperMoods);
+                Math.max(0, idleClockMinutes), keyFilter, dockGlass, glowStyle, wallpaperCaptions, handleViewInputs, tileMenu, dockEvenPadding, cinematicDots, cinematicWhiteFocus, wifiStatusColor, cinematicScrim, cinematicArt, wallpaperMoods, logoDock, quietGrid, pagedHome, gallerySeconds);
     }
 
     /**

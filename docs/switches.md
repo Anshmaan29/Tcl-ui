@@ -23,6 +23,10 @@ the rules. Keys from before this rule are on its wanted list; a screenshot for o
 | Key | Screenshot |
 |---|---|
 | `columns` | <img src="../themes/six-columns/screenshot.jpg" width="320" alt="columns on a TV"> |
+| `paged_home` | <img src="../verification/07-quieter-grid.jpg" width="320" alt="Separate apps page reached by Down from the five favourite logos"> |
+| `gallery_idle_seconds` | <img src="../verification/08-idle-gallery.jpg" width="320" alt="Real TCL Home after two idle minutes: current wallpaper and a small clock"> |
+| `logo_dock` | <img src="../verification/06-logo-dock.jpg" width="320" alt="Five floating favourites logos and icon-only controls on the TCL TV"> |
+| `quiet_grid` | <img src="../verification/07-quieter-grid.jpg" width="320" alt="Smaller lower-grid cards inside five evenly spaced navigation columns"> |
 | `sky_intensity` | <img src="sky-sunset.jpg" width="320" alt="sky_intensity on a TV"> |
 | `wallpaper_rotation_minutes` | <img src="../themes/scenes/screenshot.jpg" width="320" alt="wallpaper_rotation_minutes on a TV"> |
 | `wallpaper_change_on_wake` | <img src="switches/wallpaper_change_on_wake.jpg" width="320" alt="TCL Home after a cold boot advanced from Doctor Doom to the racing image; network name redacted"> |

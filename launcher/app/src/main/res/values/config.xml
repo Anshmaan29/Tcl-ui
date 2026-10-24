@@ -307,6 +307,13 @@
     <!-- Advance the local wallpaper collection after boot or screen-off/wake, not each app return.
          Off by default; themes can set wallpaper_change_on_wake. No timed rotation is required. -->
     <bool name="wallpaper_change_on_wake">false</bool>
+    <!-- Themes may opt into transparent logos from logos/PACKAGE.png, smaller lower tiles,
+         and a one-shot idle gallery timer. Defaults preserve the original launcher. -->
+    <bool name="logo_dock">false</bool>
+    <!-- Theme can separate the dock and remaining apps into two D-pad pages. Off by default. -->
+    <bool name="paged_home">false</bool>
+    <bool name="quiet_grid">false</bool>
+    <integer name="gallery_idle_seconds">0</integer>
 
     <!-- Time-of-day backdrop behind everything: a dark gradient that follows the clock, with a warm
          horizon glow around sunrise and sunset. 0 keeps the plain background (the default); 1 to 100

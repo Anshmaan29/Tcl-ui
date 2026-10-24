@@ -29,6 +29,13 @@ public class ThemeFilesTest {
         assertFalse(ThemeFiles.collectionImage("captions.txt"));
     }
 
+    @Test public void logosAreSeparateAndCannotEscapeTheirFolder() {
+        assertEquals("logos/com.netflix.ninja.png", ThemeFiles.path(Arrays.asList("logos", "com.netflix.ninja.png")));
+        assertTrue(ThemeFiles.isCollection(Collections.singletonList("logos")));
+        assertNull(ThemeFiles.path(Arrays.asList("logos", "../config.json")));
+        assertNull(ThemeFiles.path(Arrays.asList("logos", "captions.txt")));
+    }
+
     @Test public void anythingElseIsRefused() {
         assertNull(ThemeFiles.path(null));
         assertNull(ThemeFiles.path(Collections.emptyList()));

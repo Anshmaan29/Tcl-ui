@@ -58,6 +58,10 @@ A new key needs one there in the same pull request.
 | `show_inputs_pill` | bool | The Inputs pill in the top bar, shown when the TV has inputs (`true` by default); `false` hides it; what the remote's Input button does is unchanged |
 | `icon_only_buttons` | bool | Wi-Fi and Settings as round icon buttons; Inputs keeps its label (`false` by default) |
 | `icon_only_inputs` | bool | The Inputs pill as a round icon button too, its label kept as the TalkBack description (`false` by default). Works with or without `icon_only_buttons` |
+| `paged_home` | bool | Off by default. Show only the dock on the first page; Down opens the remaining apps. Up from their first row, Back or Home returns to the dock. Requires `dock_row` |
+| `logo_dock` | bool | Off by default. Floating logos in the favourites row, without banner cards or a dock band. Supply small transparent PNGs in `logos/PACKAGE.png` (at most 512×512 and 256 KB). Missing logos fall back to the app icon. Only the focused logo shows its name |
+| `quiet_grid` | bool | Off by default. Lower-grid cards use 84% of the normal width inside the same navigation cells, leaving more space around them |
+| `gallery_idle_seconds` | 0 to 3600 | Off at 0. After this many idle seconds on Home, fade controls away and show the current wallpaper with a small clock. The first D-pad/OK/Back press restores the previous focus and is consumed. Volume keys keep their normal behaviour. Uses one delayed callback and the existing wallpaper |
 | `top_menu` | bool | Inputs, Wi-Fi and Settings folded into one round gear, centred on the header: OK drops a menu with the three, hold OK keeps the launcher menu (`false` by default) |
 | `launcher_settings_button` | bool | Make the header Settings action open Launcher settings directly with a matching 22dp home icon; also changes the Settings row when `top_menu` is on. Hold OK keeps module-card and ordering tools. The settings page includes Reorder apps and TV settings (`false` by default) |
 | `wifi_status_color` | bool | The Wi-Fi pill's icon green while the TV is online, white while it is not (`false` by default) |
