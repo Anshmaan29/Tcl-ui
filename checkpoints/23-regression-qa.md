@@ -16,10 +16,10 @@ Every selected app has a resolvable launch entry. Apps were allowed more time wh
 
 | App | Observed result | Playback coverage |
 |---|---|---|
-| Netflix | Launches into its activity; capture is protected/empty | Owner's fresh playback check pending |
-| Prime Video | Existing profile chooser loads | Owner's fresh playback check pending |
+| Netflix | Launches into its activity; capture is protected/empty | Owner confirmed moving picture and sound after returning Home between apps |
+| Prime Video | Existing profile chooser loads | Owner confirmed moving picture and sound after returning Home between apps |
 | YouTube | Account chooser and normal interface load | Owner confirmed picture and sound after decoder recovery |
-| JioHotstar | Existing profile chooser loads | Owner's fresh playback check pending |
+| JioHotstar | Existing profile chooser loads | Owner confirmed moving picture and sound after returning Home between apps |
 | Apple TV | Signed-in catalogue loads | Programme playback not independently verified in this pass |
 | FanCode | Live player previously exercised; confirmed decoder leak after Back and Exit App | Live playback worked; switching reliability has a known failure (checkpoint 22) |
 | ZEE5 | Catalogue loads after allowing additional time | Programme playback not independently verified |
@@ -38,4 +38,4 @@ The disabled count is now 21. Three previously disabled optional packages (MX Pl
 
 FanCode's decoder retention remains reproducible and has only a verified recovery: Settings → Apps → FanCode → Force stop, or restart the TV. Back and Exit App do not reliably release it on the tested version. There is no verified permanent player fix, and app-wide daily reliability is not signed off.
 
-Fresh Netflix/Prime/JioHotstar picture-and-sound confirmation, and the final revoke/debugging-off/restart/explicit port-refusal check, remain pending. No claim that all apps or network ADB passed should be inferred from this checkpoint.
+The owner confirmed that Netflix, Prime Video and JioHotstar all play with moving picture and sound after returning Home between apps. The owner explicitly requested that debugging remain enabled for now. No authorisations were revoked and no debugging shutdown or port-closure check was performed. No claim that all apps or network ADB passed should be inferred from this checkpoint.
