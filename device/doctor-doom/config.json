@@ -39,7 +39,7 @@
   "animations": true,
   "advanced_effects": false,
   "wallpaper_change_on_wake": true,
-  "wallpaper_rotation_minutes": 0,
+  "wallpaper_rotation_minutes": 10,
   "wallpaper_order": "sequential",
   "logo_dock": true,
   "quiet_grid": true,
