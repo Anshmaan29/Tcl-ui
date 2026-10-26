@@ -26,7 +26,7 @@ The favourites row uses Netflix, Prime Video, YouTube, JioHotstar and the suppli
 
 ## Remote app buttons
 
-The physical Netflix and YouTube buttons map to `4062` and `4065` in `app_keys`. Only `InputKeyService` is enabled; `HomeKeyService` stays off. The owner tested both app buttons and confirmed that held volume still repeats on this G07 firmware. `restore_key_services: true` and the existing secure-settings permission let Home restore this helper after a force stop. The build-and-install script passes `INPUT_KEY_SERVICE=1 RESTORE_KEY_SERVICES=1` so a reinstall also keeps the shortcuts.
+The physical Netflix and YouTube buttons map to `4062` and `4065` in `app_keys`. The physical Settings button maps by Linux scancode `233` to the normal TCL Settings entry (`scan:233:com.tcl.settings`), using the same helper. Only `InputKeyService` is enabled; `HomeKeyService` stays off. The owner tested both app buttons and confirmed that held volume still repeats on this G07 firmware. `restore_key_services: true` and the existing secure-settings permission let Home restore this helper after a force stop. The build-and-install script passes `INPUT_KEY_SERVICE=1 RESTORE_KEY_SERVICES=1` so a reinstall also keeps the shortcuts.
 
 To undo just this helper, run `TV_HOST=<tv-ip> ./disable-remote-shortcuts.sh`, or switch off Home under TV Settings → Accessibility. The script preserves other accessibility services. `restore-tv.sh` also switches the helper off when returning to stock Home.
 

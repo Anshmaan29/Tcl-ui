@@ -52,7 +52,8 @@
   "paged_home": true,
   "app_keys": [
     "4062:com.netflix.ninja",
-    "4065:com.google.android.youtube.tv"
+    "4065:com.google.android.youtube.tv",
+    "scan:233:com.tcl.settings"
   ],
   "restore_key_services": true
 }
